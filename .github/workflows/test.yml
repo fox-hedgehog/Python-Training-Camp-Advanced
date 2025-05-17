@@ -1,6 +1,7 @@
 name: Python Test Scoring and Reporting
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main", "yololab" ]
   pull_request:
