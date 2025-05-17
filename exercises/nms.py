@@ -21,10 +21,23 @@ def calculate_iou(box1, box2):
     Return:
         float: IoU 值。
     """
-    # 请在此处编写代码
-    # (与 iou.py 中的练习相同，可以复用代码或导入)
-    # 提示：计算交集面积和并集面积，然后相除。
-    pass
+    x_left = max(box1[0], box2[0])
+    y_top = max(box1[1], box2[1])
+    x_right = min(box1[2], box2[2])
+    y_bottom = min(box1[3], box2[3])
+
+    if x_left >= x_right or y_top >= y_bottom:
+        return 0
+    
+    intersection_area = (x_right - x_left) * (y_bottom - y_top)
+    box = box1
+    box1_area = (box[2] - box[0]) * (box[3] - box[1])
+    box = box2
+    box2_area = (box[2] - box[0]) * (box[3] - box[1])
+
+    union_area = box1_area + box2_area - intersection_area
+
+    return intersection_area / union_area
 
 def nms(boxes, scores, iou_threshold):
     """
@@ -41,15 +54,38 @@ def nms(boxes, scores, iou_threshold):
     # 请在此处编写代码
     # 提示：
     # 1. 如果 boxes 为空，直接返回空列表。
+    if len(boxes) == 0:
+        return []
     # 2. 将 boxes 和 scores 转换为 NumPy 数组。
+    boxes = np.array(boxes)
+    scores = np.array(scores)
     # 3. 计算所有边界框的面积 areas。
+    areas = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
+    
     # 4. 根据 scores 对边界框索引进行降序排序 (order = np.argsort(scores)[::-1])。
+    order = np.argsort(scores)[::-1]
+    
     # 5. 初始化一个空列表 keep 用于存储保留的索引。
+    keep = []
     # 6. 当 order 列表不为空时循环：
+    while order.size > 0:
     #    a. 取出 order 中的第一个索引 i (当前分数最高的框)，加入 keep。
+        i = order[0]
+        keep.append(i)
+        if order.size == 1:
+            break
     #    b. 计算框 i 与 order 中剩余所有框的 IoU。
+        new_ordrer = []
+        for j in order[1:]:
+            iou = calculate_iou(boxes[i], boxes[j])
+            if iou <= iou_threshold:
+                new_ordrer.append(j)
+        order = np.array(new_ordrer)
+
     #       (需要计算交集区域坐标 xx1, yy1, xx2, yy2 和交集面积 intersection)
     #    c. 找到 IoU 小于等于 iou_threshold 的索引 inds。
-    #    d. 更新 order，只保留那些 IoU <= threshold 的框的索引 (order = order[inds + 1])。
+
+        # 更新 order，只保留那些 IoU <= threshold 的框的索引
+
     # 7. 返回 keep 列表。
-    pass 
+    return keep

@@ -1,5 +1,19 @@
 # Python训练营进阶部分
 
+目标： 为最终目标检测项目做技术准备，深入理解并实践目标检测中常用的函数、模型组件及训练技巧，尤其侧重 OpenCV 在图像预处理和后处理中的应用，并结合 YOLO 算法进行实践！通过练习评测与AI评测以及人工评测后达到指定分数后，进入最终项目阶段。
+
+学习资料：
+
+● OpenCV 官方文档：https://docs.opencv.org/ (掌握图像处理的基础工具)
+
+● YOLO论文原文 (Redmonetal., 2016)：https://pjreddie.com/darknet/yolo/ (论文链接) (理解 YOLO 算法的设计思想)
+
+● SSD 论文 (Liuetal.,2016)：https://arxiv.org/abs/1512.02325 (Single Shot MultiBox Detector, 了解另一种经典的目标检测算法)
+
+● Faster R-CNN 论文 (Renetal., 2015)：https://arxiv.org/abs/1506.01497 (Two-stage目标检测的代表作)
+
+● GitHub 上的小型目标检测项目： (参考代码思路，避免直接使用，搜索关键词: "object detection github")
+
 本项目包含一系列Python深度学习算法和计算机视觉实现的练习。你需要补全 `exercises` 目录下的 Python 文件中缺失的代码，并通过测试来验证实现的正确性。
 
 ## 练习内容

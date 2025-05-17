@@ -38,4 +38,20 @@ def calculate_iou(box1, box2):
     # 6. 计算并集面积 union_area = box1_area + box2_area - intersection_area。
     # 7. 计算 IoU = intersection_area / union_area。
     #    注意处理 union_area 为 0 的情况 (除零错误)。
-    pass 
+    x_left = max(box1[0], box2[0])
+    y_top = max(box1[1], box2[1])
+    x_right = min(box1[2], box2[2])
+    y_bottom = min(box1[3], box2[3])
+
+    if x_left >= x_right or y_top >= y_bottom:
+        return 0
+
+    intersection_area = (x_right - x_left) * (y_bottom - y_top)
+    box = box1
+    box1_area = (box[2] - box[0]) * (box[3] - box[1])
+    box = box2
+    box2_area = (box[2] - box[0]) * (box[3] - box[1])
+
+    union_area = box1_area + box2_area - intersection_area
+
+    return intersection_area / union_area
